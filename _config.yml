@@ -4,7 +4,7 @@ description: Pablo Hiroshi's personal webpage
 url: https://pablohiro.github.io
 github_username: pablohiro
 source: src
-destination: .
+destination: /
 
 # Build settings
 markdown: kramdown
