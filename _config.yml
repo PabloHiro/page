@@ -3,6 +3,7 @@ title: Pablo Hiroshi
 description: Pablo Hiroshi's personal webpage
 url: https://pablohiro.github.io
 github_username: pablohiro
+source: src
 
 # Build settings
 markdown: kramdown
