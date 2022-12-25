@@ -17,6 +17,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
+repository: https://github.com/PabloHiro/page
 author:
   name: Pablo Hiroshi
   bio: YAML engineer ;)
