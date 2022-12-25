@@ -1,10 +1,10 @@
 # Site settings
-title: Pablo Hiroshi
+title: PabloHiro
 description: Pablo Hiroshi's personal webpage
 url: https://pablohiro.github.io
 baseurl: page
 github_username: pablohiro
-minimal_mistakes_skin: dirt
+minimal_mistakes_skin: default
 
 # Build settings
 markdown: kramdown
