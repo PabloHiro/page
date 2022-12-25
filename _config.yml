@@ -9,7 +9,6 @@ minimal_mistakes_skin: dirt
 # Build settings
 markdown: kramdown
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
-permalink: /:posts/:title/
 include:
   - _pages
 plugins:
