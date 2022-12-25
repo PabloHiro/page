@@ -27,11 +27,9 @@ author:
     - label: "Github"
       icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
       url: https://github.com/PabloHiro
-footer:
-  links:
-    - label: "Github"
-      icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-      url: https://github.com/PabloHiro
+    - label: Linkedin
+      icon: https://content.linkedin.com/content/dam/me/news/en-us/blog/authors/l/li-logo.png.original.png
+      url: https://www.linkedin.com/in/pablo-hiroshi-alonso/
 date_format: "%Y-%m-%d"
 defaults:
   # _posts
