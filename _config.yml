@@ -21,7 +21,7 @@ plugins:
 repository: PabloHiro/page
 author:
   name: Pablo Hiroshi
-  avatar: "/assets/images/profile.jpg"
+  avatar: "/assets/images/profile.png"
   bio: YAML engineer ;)
   links:
     - label: "Github"
