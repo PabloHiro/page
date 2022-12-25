@@ -31,7 +31,7 @@ author:
       icon: "fab fa-fw fa-linkedin"
       url: https://www.linkedin.com/in/pablo-hiroshi-alonso/
     - label: "Stack Overflow"
-      icon: "fab fa-fw fa-stackoverflow"
+      icon: "fab fa-fw fa-stack-overflow"
       url: https://stackoverflow.com/users/18099647/hirocereal
 date_format: "%Y-%m-%d"
 atom_feed:
