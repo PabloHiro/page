@@ -21,15 +21,18 @@ plugins:
 repository: PabloHiro/page
 author:
   name: Pablo Hiroshi
+  avatar: "/assets/images/bio-photo.jpg"
   bio: YAML engineer ;)
   links:
     - label: "Github"
-      icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+      icon: "fab fa-fw fa-github"
       url: https://github.com/PabloHiro
     - label: Linkedin
-      icon: https://content.linkedin.com/content/dam/me/news/en-us/blog/authors/l/li-logo.png.original.png
+      icon: "fab fa-fw fa-linkedin"
       url: https://www.linkedin.com/in/pablo-hiroshi-alonso/
 date_format: "%Y-%m-%d"
+atom_feed:
+  hide: true
 defaults:
   # _posts
   - scope:
