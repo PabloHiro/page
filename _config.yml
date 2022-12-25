@@ -43,7 +43,6 @@ defaults:
       author_profile: true
       read_time: false
       comments: false
-      share: true
       related: false
   # _pages
   - scope:
@@ -51,5 +50,4 @@ defaults:
       type: pages
     values:
       layout: single
-      share: true
       author_profile: true
