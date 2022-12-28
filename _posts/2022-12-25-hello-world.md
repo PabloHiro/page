@@ -14,4 +14,4 @@ As I do not want to install and run Jekyll locally I have defined a **Github Wor
 
 [Jekyll actions](https://github.com/marketplace/actions/jekyll-actions)
 
-This allows me to publish a my own webpage in the internet, for free and without installing any web development related software in my computer.
+This allows me to publish a my own webpage in the internet, for free, and without installing any web development related software in my computer.
