@@ -1,5 +1,6 @@
 ---
 title: "Dictionaries and lists in Ansible"
+classes: wide
 ---
 
 Today I had the chance to explain to a colleague how dictionaries and lists are defined in **Ansible**. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for **Configuration as Code**

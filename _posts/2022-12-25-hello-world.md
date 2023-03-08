@@ -1,5 +1,6 @@
 ---
 title: "Github Pages and Jekyll"
+classes: wide
 ---
 
 I have created my personal webpage using **Github Actions** and **Github Pages**. Github allows its users to publish their webpages for free using the **Github Pages** feature.
