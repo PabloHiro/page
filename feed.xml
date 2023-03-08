@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://pablohiro.github.io/page/feed.xml" rel="self" type="application/atom+xml" /><link href="https://pablohiro.github.io/page/" rel="alternate" type="text/html" /><updated>2023-03-08T19:37:46+00:00</updated><id>https://pablohiro.github.io/page/feed.xml</id><title type="html">PabloHiro</title><subtitle>Pablo Hiroshi's personal webpage</subtitle><author><name>Pablo Hiroshi</name></author><entry><title type="html">Backups</title><link href="https://pablohiro.github.io/page/2023/01/19/backups.html" rel="alternate" type="text/html" title="Backups" /><published>2023-01-19T00:00:00+00:00</published><updated>2023-01-19T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2023/01/19/backups</id><content type="html" xml:base="https://pablohiro.github.io/page/2023/01/19/backups.html">&lt;p&gt;I will be explaining the difference between a &lt;em&gt;Full backup&lt;/em&gt;, a &lt;em&gt;Differential backup&lt;/em&gt; and an &lt;em&gt;Incremental backup&lt;/em&gt;. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup performs a copy of all the data&lt;/li&gt;
+  &lt;li&gt;A differential backup contains all of the data that has changed since the last full backup.&lt;/li&gt;
+  &lt;li&gt;An incremental backup only includes the data that has changed since the previous backup.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let’s use the scenario below as an example of the differences between these three:&lt;/p&gt;
+
+&lt;p class=&quot;full&quot;&gt;&lt;img src=&quot;https://pablohiro.github.io/page/assets/images/backups-disks.drawio.png&quot; alt=&quot;Backups&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We will compare how the different backup strategies perform if we would execute them once a day under these conditions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 0&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We have an empty disk where a file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file.txt&lt;/code&gt; occupying 1KB of disk space has been created:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume 1KB of disk space, same as the size of the file.&lt;/li&gt;
+  &lt;li&gt;A differential backup will perform a full backup the first it is applied to a disk.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will perform a full backup the first it is applied to a disk as well.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 1&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We have added a new file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello.txt&lt;/code&gt; of 2KB size.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume a space equivalent to the sum of the current files in the disk, 3KB&lt;/li&gt;
+  &lt;li&gt;A differential backup will store all the data that has changed since the last full backup, so it will store the new file, consuming 2KB.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will store the difference between the previous state and the current state, consuming 2 KB&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;On this day the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file.txt&lt;/code&gt; has grown to 5KB. Most backup systems do not detect what has changed inside the file, they will mark the file as changed and perform a full copy of it. We will work on this assumption.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume now 7KB&lt;/li&gt;
+  &lt;li&gt;A differential backup will store both files, as both did not exist as they are now in the initial full backup, consuming 7KB.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will store the new file, consuming 5KB.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 3&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye.txt&lt;/code&gt; of 3KB size is added.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume the sum of all files, 10KB&lt;/li&gt;
+  &lt;li&gt;A differential backup will store all three files, consuming 10KB too.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will store the new file, consuming 3KB.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As can be seen from the diagram the total disk space consumed by the different strategies is quite different. At the end of day 3:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The full backup strategy has consumed 1+3+7+10 = 21KB of disk space&lt;/li&gt;
+  &lt;li&gt;The differential backup strategy has consumed 1+2+7+10 = 20KB of disk space&lt;/li&gt;
+  &lt;li&gt;The incremental backup strategy has consumed 1+2+5+3= 11KB of disk space&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All of them offer the ability to restore the data to its state on any of the days, so in terms of disk space the best strategy to follow would be the incremental backup strategy. However this comes at a price:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Incremental backups depend on the previous backup to work. If any of the backup copies gets corrupted, backups after that copy will no longer work.&lt;/li&gt;
+  &lt;li&gt;Incremental backups are CPU intensive, both at the time of performing backup and when restoring them. If a prompt recovery is needed, incremental backups might not be the best choice.&lt;/li&gt;
+  &lt;li&gt;Incremental backups take incrementally longer to take. It is best to keep them in short-cycles, performing a full backup at regular intervals, such as once every week, resetting the cycle.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If the risk of using incremental cannot be assumed, the following strategy that consumes less disk space would be the differential backup strategy. Which has the following caveats:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Differential backups do not depend on the previous backup to work, they only depend on the initial full backup.&lt;/li&gt;
+  &lt;li&gt;Differential backups are not as CPU intensive as the incremental backups and can perform a recovery at the same speed as a full backup.&lt;/li&gt;
+  &lt;li&gt;If files in a system are added, but not modified (such a logging system), differential backups will perform extremely well in terms of used disk space, specially if they are combined with full backups at regular intervals.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, a full backup strategy will be the strategy that will consume more disk space but in exchange it will offer more security to the user:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Full backups are independent to each other, they are basically a picture of the filesystem. If a backup copy is lost or corrupted, the rest are not affected.&lt;/li&gt;
+  &lt;li&gt;Full backups are best used in combination with other strategies, performing them at regular intervales when the filesystem is not under a heavy load, like during the night or weekends.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">I will be explaining the difference between a Full backup, a Differential backup and an Incremental backup. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.</summary></entry><entry><title type="html">Dictionaries and lists in Ansible</title><link href="https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists.html" rel="alternate" type="text/html" title="Dictionaries and lists in Ansible" /><published>2022-12-28T00:00:00+00:00</published><updated>2022-12-28T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists</id><content type="html" xml:base="https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists.html">&lt;p&gt;Today I had the chance to explain to a colleague how dictionaries and lists are defined in &lt;strong&gt;Ansible&lt;/strong&gt;. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for &lt;strong&gt;Configuration as Code&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s tackle initializating first. Dictionaries use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}&lt;/code&gt;, lists use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;empty_dict: {}
+
+empty_list: []
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dictionaries can be populated in two ways, both equivalent.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my_dict: {key: 'value', kee: 'bar'}
+
+my_dict:
+  key: 'value'
+  kee: 'bar'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Same with lists:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my_list: ['first', 'second', 'third']
+
+my_list:
+  - first
+  - second
+  - third
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Things get complicated when both data structures are nested, so I am leaving some examples below, which hopefully will help you identify easily these structures.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;list_of_dictionaries: [first_key: 'first_value', second_key: 'second_value']
+
+list_of_dictionaries:
+  - { first_key: 'first_value' }
+  - { second_key: 'second_value' }
+
+
+dictionary_of_lists: {first_list: ['one', 'two', 'three'], second_list: ['four', 'five', 'six']}
+
+dictionary_of_lists:
+  first_list:
+    - one
+    - two
+    - three
+  second_list:
+    - four
+    - five
+    - six
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And the data above can be queried as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# To retrieve 'second_value'
+list_of_dictionaries[1]['second_key']
+
+# To retrieve 'three'
+dictionary_of_lists['first_list'][2]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">Today I had the chance to explain to a colleague how dictionaries and lists are defined in Ansible. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for Configuration as Code</summary></entry><entry><title type="html">Github Pages and Jekyll</title><link href="https://pablohiro.github.io/page/2022/12/25/hello-world.html" rel="alternate" type="text/html" title="Github Pages and Jekyll" /><published>2022-12-25T00:00:00+00:00</published><updated>2022-12-25T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2022/12/25/hello-world</id><content type="html" xml:base="https://pablohiro.github.io/page/2022/12/25/hello-world.html">&lt;p&gt;I have created my personal webpage using &lt;strong&gt;Github Actions&lt;/strong&gt; and &lt;strong&gt;Github Pages&lt;/strong&gt;. Github allows its users to publish their webpages for free using the &lt;strong&gt;Github Pages&lt;/strong&gt; feature.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt; simply serves the contents of a repository branch as a webpage, hence assuming there is an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.html&lt;/code&gt; file that serves as an entrypoint.&lt;/p&gt;
+
+&lt;p&gt;Since I am not a web developer myself I have decided to use &lt;strong&gt;Jekyll&lt;/strong&gt;, which is a tool that processes &lt;strong&gt;Markdown&lt;/strong&gt; files into &lt;strong&gt;HTML&lt;/strong&gt;. I have used the following repository as reference in order to build a webpage using Jekyll:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/mmistakes/mm-github-pages-starter&quot;&gt;Minimal mistakes pages starter&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As I do not want to install and run Jekyll locally I have defined a &lt;strong&gt;Github Workflow&lt;/strong&gt;, which is the equivalent of a pipeline in Github, to run &lt;strong&gt;Jekyll&lt;/strong&gt; command line for me and deploy the resulting &lt;strong&gt;HTML&lt;/strong&gt; code in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch of my repository every time there is a new commit in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; branch. To do this I have followed this guide:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/marketplace/actions/jekyll-actions&quot;&gt;Jekyll actions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This allows me to publish a my own webpage in the internet, for free, and without installing any web development related software in my computer.&lt;/p&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">I have created my personal webpage using Github Actions and Github Pages. Github allows its users to publish their webpages for free using the Github Pages feature.</summary></entry></feed>
