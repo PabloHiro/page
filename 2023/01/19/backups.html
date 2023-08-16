@@ -1,0 +1,325 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Backups - PabloHiro</title>
+<meta name="description" content="I will be explaining the difference between a Full backup, a Differential backup and an Incremental backup. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.">
+
+
+  <meta name="author" content="Pablo Hiroshi">
+  
+  <meta property="article:author" content="Pablo Hiroshi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="PabloHiro">
+<meta property="og:title" content="Backups">
+<meta property="og:url" content="https://pablohiro.github.io/page/2023/01/19/backups.html">
+
+
+  <meta property="og:description" content="I will be explaining the difference between a Full backup, a Differential backup and an Incremental backup. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-01-19T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://pablohiro.github.io/page/2023/01/19/backups.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://pablohiro.github.io/page/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/page/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/page/">
+          PabloHiro
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/page/posts/">Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/page/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Backups">
+    <meta itemprop="description" content="I will be explaining the difference between a Full backup, a Differential backup and an Incremental backup. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.">
+    <meta itemprop="datePublished" content="2023-01-19T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Backups
+</h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>I will be explaining the difference between a <em>Full backup</em>, a <em>Differential backup</em> and an <em>Incremental backup</em>. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.</p>
+
+<ul>
+  <li>A full backup performs a copy of all the data</li>
+  <li>A differential backup contains all of the data that has changed since the last full backup.</li>
+  <li>An incremental backup only includes the data that has changed since the previous backup.</li>
+</ul>
+
+<p>Let’s use the scenario below as an example of the differences between these three:</p>
+
+<p class="full"><img src="https://pablohiro.github.io/page/assets/images/backups-disks.drawio.png" alt="Backups" /></p>
+
+<p>We will compare how the different backup strategies perform if we would execute them once a day under these conditions.</p>
+
+<p><strong>Day 0</strong></p>
+
+<p>We have an empty disk where a file named <code class="language-plaintext highlighter-rouge">file.txt</code> occupying 1KB of disk space has been created:</p>
+
+<ul>
+  <li>A full backup of the disk will consume 1KB of disk space, same as the size of the file.</li>
+  <li>A differential backup will perform a full backup the first it is applied to a disk.</li>
+  <li>An incremental backup will perform a full backup the first it is applied to a disk as well.</li>
+</ul>
+
+<p><strong>Day 1</strong></p>
+
+<p>We have added a new file named <code class="language-plaintext highlighter-rouge">hello.txt</code> of 2KB size.</p>
+
+<ul>
+  <li>A full backup of the disk will consume a space equivalent to the sum of the current files in the disk, 3KB</li>
+  <li>A differential backup will store all the data that has changed since the last full backup, so it will store the new file, consuming 2KB.</li>
+  <li>An incremental backup will store the difference between the previous state and the current state, consuming 2 KB</li>
+</ul>
+
+<p><strong>Day 2</strong></p>
+
+<p>On this day the file <code class="language-plaintext highlighter-rouge">file.txt</code> has grown to 5KB. Most backup systems do not detect what has changed inside the file, they will mark the file as changed and perform a full copy of it. We will work on this assumption.</p>
+
+<ul>
+  <li>A full backup of the disk will consume now 7KB</li>
+  <li>A differential backup will store both files, as both did not exist as they are now in the initial full backup, consuming 7KB.</li>
+  <li>An incremental backup will store the new file, consuming 5KB.</li>
+</ul>
+
+<p><strong>Day 3</strong></p>
+
+<p>A file named <code class="language-plaintext highlighter-rouge">bye.txt</code> of 3KB size is added.</p>
+
+<ul>
+  <li>A full backup of the disk will consume the sum of all files, 10KB</li>
+  <li>A differential backup will store all three files, consuming 10KB too.</li>
+  <li>An incremental backup will store the new file, consuming 3KB.</li>
+</ul>
+
+<p><strong>Summary</strong></p>
+
+<p>As can be seen from the diagram the total disk space consumed by the different strategies is quite different. At the end of day 3:</p>
+
+<ul>
+  <li>The full backup strategy has consumed 1+3+7+10 = 21KB of disk space</li>
+  <li>The differential backup strategy has consumed 1+2+7+10 = 20KB of disk space</li>
+  <li>The incremental backup strategy has consumed 1+2+5+3= 11KB of disk space</li>
+</ul>
+
+<p>All of them offer the ability to restore the data to its state on any of the days, so in terms of disk space the best strategy to follow would be the incremental backup strategy. However this comes at a price:</p>
+
+<ul>
+  <li>Incremental backups depend on the previous backup to work. If any of the backup copies gets corrupted, backups after that copy will no longer work.</li>
+  <li>Incremental backups are CPU intensive, both at the time of performing backup and when restoring them. If a prompt recovery is needed, incremental backups might not be the best choice.</li>
+  <li>Incremental backups take incrementally longer to take. It is best to keep them in short-cycles, performing a full backup at regular intervals, such as once every week, resetting the cycle.</li>
+</ul>
+
+<p>If the risk of using incremental cannot be assumed, the following strategy that consumes less disk space would be the differential backup strategy. Which has the following caveats:</p>
+
+<ul>
+  <li>Differential backups do not depend on the previous backup to work, they only depend on the initial full backup.</li>
+  <li>Differential backups are not as CPU intensive as the incremental backups and can perform a recovery at the same speed as a full backup.</li>
+  <li>If files in a system are added, but not modified (such a logging system), differential backups will perform extremely well in terms of used disk space, specially if they are combined with full backups at regular intervals.</li>
+</ul>
+
+<p>Finally, a full backup strategy will be the strategy that will consume more disk space but in exchange it will offer more security to the user:</p>
+
+<ul>
+  <li>Full backups are independent to each other, they are basically a picture of the filesystem. If a backup copy is lost or corrupted, the rest are not affected.</li>
+  <li>Full backups are best used in combination with other strategies, performing them at regular intervals when the filesystem is not under a heavy load, like during the night or weekends.</li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-01-19T00:00:00+00:00">2023-01-19</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/page/2022/12/28/dictionaries-and-lists.html" class="pagination--pager" title="Dictionaries and lists in Ansible
+">Previous</a>
+    
+    
+      <a href="/page/2023/08/03/barrier.html" class="pagination--pager" title="Linux and Windows with the same keyboard and mouse
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 PabloHiro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/page/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,297 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Dictionaries and lists in Ansible - PabloHiro</title>
+<meta name="description" content="Today I had the chance to explain to a colleague how dictionaries and lists are defined in Ansible. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for Configuration as Code">
+
+
+  <meta name="author" content="Pablo Hiroshi">
+  
+  <meta property="article:author" content="Pablo Hiroshi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="PabloHiro">
+<meta property="og:title" content="Dictionaries and lists in Ansible">
+<meta property="og:url" content="https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists.html">
+
+
+  <meta property="og:description" content="Today I had the chance to explain to a colleague how dictionaries and lists are defined in Ansible. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for Configuration as Code">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-12-28T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://pablohiro.github.io/page/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/page/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/page/">
+          PabloHiro
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/page/posts/">Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/page/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Dictionaries and lists in Ansible">
+    <meta itemprop="description" content="Today I had the chance to explain to a colleague how dictionaries and lists are defined in Ansible. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for Configuration as Code">
+    <meta itemprop="datePublished" content="2022-12-28T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Dictionaries and lists in Ansible
+</h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Today I had the chance to explain to a colleague how dictionaries and lists are defined in <strong>Ansible</strong>. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for <strong>Configuration as Code</strong></p>
+
+<p>Let’s tackle initializating first. Dictionaries use <code class="language-plaintext highlighter-rouge">{}</code>, lists use <code class="language-plaintext highlighter-rouge">[]</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>empty_dict: {}
+
+empty_list: []
+</code></pre></div></div>
+
+<p>Dictionaries can be populated in two ways, both equivalent.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_dict: {key: 'value', kee: 'bar'}
+
+my_dict:
+  key: 'value'
+  kee: 'bar'
+</code></pre></div></div>
+
+<p>Same with lists:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_list: ['first', 'second', 'third']
+
+my_list:
+  - first
+  - second
+  - third
+</code></pre></div></div>
+
+<p>Things get complicated when both data structures are nested, so I am leaving some examples below, which hopefully will help you identify easily these structures.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>list_of_dictionaries: [first_key: 'first_value', second_key: 'second_value']
+
+list_of_dictionaries:
+  - { first_key: 'first_value' }
+  - { second_key: 'second_value' }
+
+
+dictionary_of_lists: {first_list: ['one', 'two', 'three'], second_list: ['four', 'five', 'six']}
+
+dictionary_of_lists:
+  first_list:
+    - one
+    - two
+    - three
+  second_list:
+    - four
+    - five
+    - six
+</code></pre></div></div>
+
+<p>And the data above can be queried as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># To retrieve 'second_value'
+list_of_dictionaries[1]['second_key']
+
+# To retrieve 'three'
+dictionary_of_lists['first_list'][2]
+</code></pre></div></div>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-12-28T00:00:00+00:00">2022-12-28</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/page/2022/12/25/hello-world.html" class="pagination--pager" title="Github Pages and Jekyll
+">Previous</a>
+    
+    
+      <a href="/page/2023/01/19/backups.html" class="pagination--pager" title="Backups
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 PabloHiro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/page/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

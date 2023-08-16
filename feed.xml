@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://pablohiro.github.io/page/feed.xml" rel="self" type="application/atom+xml" /><link href="https://pablohiro.github.io/page/" rel="alternate" type="text/html" /><updated>2023-08-16T13:52:31+00:00</updated><id>https://pablohiro.github.io/page/feed.xml</id><title type="html">PabloHiro</title><subtitle>Pablo Hiroshi's personal webpage</subtitle><author><name>Pablo Hiroshi</name></author><entry><title type="html">Linux and Windows with the same keyboard and mouse</title><link href="https://pablohiro.github.io/page/2023/08/03/barrier.html" rel="alternate" type="text/html" title="Linux and Windows with the same keyboard and mouse" /><published>2023-08-03T00:00:00+00:00</published><updated>2023-08-03T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2023/08/03/barrier</id><content type="html" xml:base="https://pablohiro.github.io/page/2023/08/03/barrier.html">&lt;p&gt;I have recently refurbished an old computer I had at my parents place and decided it was time to have my first Linux physical machine and not just a virtual machine. However, I had to solve the problem of having only a single keyboard and mouse at home and avoid the hassle of unplugging and connecting the peripherals every time I want to work in Linux.&lt;/p&gt;
+
+&lt;p&gt;Luckily, a friend recommended me &lt;a href=&quot;https://github.com/debauchee/barrier&quot;&gt;barrier&lt;/a&gt; (shout out to Víctor), so I took the challenge to set it up at home. My desk at home consists of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A Windows 10 Laptop&lt;/li&gt;
+  &lt;li&gt;An Ubuntu Jammy (22.04) PC&lt;/li&gt;
+  &lt;li&gt;Two screens&lt;/li&gt;
+  &lt;li&gt;One mouse&lt;/li&gt;
+  &lt;li&gt;One keyboard&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After reading &lt;strong&gt;barrier’s&lt;/strong&gt; documentation it became clear that it has a server-client architecture. Since I mainly work with my laptop, I chose to make this the server and make the Linux PC the client. This also meant that I had to configure both machines to have static IPs. I checked my router configuration:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Network range: 192.168.1.0/24&lt;/li&gt;
+  &lt;li&gt;DHCP range: 192.168.1.125-192.168.1.254&lt;/li&gt;
+  &lt;li&gt;Gateway: 192.168.1.1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Good, no need to change the router to make some IPs available, part of the network range is not covered by DHCP. I configured both machines as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Laptop (the server): 192.168.1.10&lt;/li&gt;
+  &lt;li&gt;Ubuntu (the client): 192.168.1.11&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I installed the last available version of &lt;strong&gt;barrier&lt;/strong&gt; on both systems. Luckily, &lt;strong&gt;barrier&lt;/strong&gt; provides a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.exe&lt;/code&gt; on its release page on Github: https://github.com/debauchee/barrier/releases/tag/v2.4.0, so that covers Windows. As for Ubuntu, as easy as:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
+sudo apt install barrier
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now that &lt;strong&gt;barrier&lt;/strong&gt; is installed on both machines, it is time to configure it.&lt;/p&gt;
+
+&lt;h2 id=&quot;windows&quot;&gt;Windows&lt;/h2&gt;
+
+&lt;p&gt;When &lt;strong&gt;barrier&lt;/strong&gt; is started for the first time, it let’s you choose between server an client. I chose server. On the main panel of &lt;strong&gt;barrier&lt;/strong&gt; the preferred settings are selected by default. All I had to do was making sure that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Server&lt;/code&gt; dialog box was selected.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://pablohiro.github.io/page/assets/images/barrier-1.png&quot; alt=&quot;server-config-1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then, after clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Configure Server&lt;/code&gt; button, the following window pops up:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://pablohiro.github.io/page/assets/images/barrier-2.png&quot; alt=&quot;server-config-2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I double clicked on the right of my main display, as I wanted to have Ubuntu displayed on my screen on the right, and named this client with the same hostname my Ubuntu machine has: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;workstation&lt;/code&gt;. Once this is done, and the &lt;strong&gt;barrier&lt;/strong&gt; server is up and running, we are done with Windows.&lt;/p&gt;
+
+&lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
+
+&lt;p&gt;For Linux, I wanted to make the client start as a system service. Easiest way to set this up is to manually configure &lt;strong&gt;barrier&lt;/strong&gt;, test it works and then save the command in a service file. In my case:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://pablohiro.github.io/page/assets/images/barrier-3.png&quot; alt=&quot;client-config-1&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ps aux | grep barrierc
+user   12128  2.5  0.0  96128  7840 ?        Sl   23:20   0:03 /usr/bin/barrierc -f --no-tray --debug INFO --name workstation --disable-crypto --log /var/log/barrier.log [192.168.1.10]:24800
+user   12486  0.0  0.0  17868  2540 pts/5    S+   23:23   0:00 grep --color=auto barrierc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Notice the flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--disable-crypto&lt;/code&gt;. For simplicity purposes, I disabled SSL as I have separate WIFI network for guests ;)&lt;/p&gt;
+
+&lt;p&gt;I checked as well the command line options listed &lt;a href=&quot;https://github.com/debauchee/barrier/wiki/Command-Line&quot;&gt;here&lt;/a&gt;, and added &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--restart&lt;/code&gt; to the service definition.&lt;/p&gt;
+
+&lt;p&gt;I created the systemd service definition:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vim /etc/systemd/system/barrier.service
+$ cat /etc/systemd/system/barrier.service
+[Unit]
+Description=Barrier mouse/keyboard share
+Requires=display-manager.service
+After=display-manager.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/barrierc -f --no-tray --debug INFO --name workstation --disable-crypto --restart --log /var/log/barrier.log [192.168.1.10]:24800
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And configured it so it boots on startup:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl daemon-reload
+sudo systemctl enable barrier
+sudo systemctl start barrier
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And that’s it, setup done.&lt;/p&gt;
+
+&lt;h2 id=&quot;result&quot;&gt;Result&lt;/h2&gt;
+
+&lt;p&gt;:)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://pablohiro.github.io/page/assets/images/barrier-4.jpg&quot; alt=&quot;result&quot; /&gt;&lt;/p&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">I have recently refurbished an old computer I had at my parents place and decided it was time to have my first Linux physical machine and not just a virtual machine. However, I had to solve the problem of having only a single keyboard and mouse at home and avoid the hassle of unplugging and connecting the peripherals every time I want to work in Linux.</summary></entry><entry><title type="html">Backups</title><link href="https://pablohiro.github.io/page/2023/01/19/backups.html" rel="alternate" type="text/html" title="Backups" /><published>2023-01-19T00:00:00+00:00</published><updated>2023-01-19T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2023/01/19/backups</id><content type="html" xml:base="https://pablohiro.github.io/page/2023/01/19/backups.html">&lt;p&gt;I will be explaining the difference between a &lt;em&gt;Full backup&lt;/em&gt;, a &lt;em&gt;Differential backup&lt;/em&gt; and an &lt;em&gt;Incremental backup&lt;/em&gt;. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup performs a copy of all the data&lt;/li&gt;
+  &lt;li&gt;A differential backup contains all of the data that has changed since the last full backup.&lt;/li&gt;
+  &lt;li&gt;An incremental backup only includes the data that has changed since the previous backup.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let’s use the scenario below as an example of the differences between these three:&lt;/p&gt;
+
+&lt;p class=&quot;full&quot;&gt;&lt;img src=&quot;https://pablohiro.github.io/page/assets/images/backups-disks.drawio.png&quot; alt=&quot;Backups&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We will compare how the different backup strategies perform if we would execute them once a day under these conditions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 0&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We have an empty disk where a file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file.txt&lt;/code&gt; occupying 1KB of disk space has been created:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume 1KB of disk space, same as the size of the file.&lt;/li&gt;
+  &lt;li&gt;A differential backup will perform a full backup the first it is applied to a disk.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will perform a full backup the first it is applied to a disk as well.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 1&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We have added a new file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello.txt&lt;/code&gt; of 2KB size.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume a space equivalent to the sum of the current files in the disk, 3KB&lt;/li&gt;
+  &lt;li&gt;A differential backup will store all the data that has changed since the last full backup, so it will store the new file, consuming 2KB.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will store the difference between the previous state and the current state, consuming 2 KB&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;On this day the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file.txt&lt;/code&gt; has grown to 5KB. Most backup systems do not detect what has changed inside the file, they will mark the file as changed and perform a full copy of it. We will work on this assumption.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume now 7KB&lt;/li&gt;
+  &lt;li&gt;A differential backup will store both files, as both did not exist as they are now in the initial full backup, consuming 7KB.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will store the new file, consuming 5KB.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Day 3&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bye.txt&lt;/code&gt; of 3KB size is added.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A full backup of the disk will consume the sum of all files, 10KB&lt;/li&gt;
+  &lt;li&gt;A differential backup will store all three files, consuming 10KB too.&lt;/li&gt;
+  &lt;li&gt;An incremental backup will store the new file, consuming 3KB.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As can be seen from the diagram the total disk space consumed by the different strategies is quite different. At the end of day 3:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The full backup strategy has consumed 1+3+7+10 = 21KB of disk space&lt;/li&gt;
+  &lt;li&gt;The differential backup strategy has consumed 1+2+7+10 = 20KB of disk space&lt;/li&gt;
+  &lt;li&gt;The incremental backup strategy has consumed 1+2+5+3= 11KB of disk space&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All of them offer the ability to restore the data to its state on any of the days, so in terms of disk space the best strategy to follow would be the incremental backup strategy. However this comes at a price:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Incremental backups depend on the previous backup to work. If any of the backup copies gets corrupted, backups after that copy will no longer work.&lt;/li&gt;
+  &lt;li&gt;Incremental backups are CPU intensive, both at the time of performing backup and when restoring them. If a prompt recovery is needed, incremental backups might not be the best choice.&lt;/li&gt;
+  &lt;li&gt;Incremental backups take incrementally longer to take. It is best to keep them in short-cycles, performing a full backup at regular intervals, such as once every week, resetting the cycle.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If the risk of using incremental cannot be assumed, the following strategy that consumes less disk space would be the differential backup strategy. Which has the following caveats:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Differential backups do not depend on the previous backup to work, they only depend on the initial full backup.&lt;/li&gt;
+  &lt;li&gt;Differential backups are not as CPU intensive as the incremental backups and can perform a recovery at the same speed as a full backup.&lt;/li&gt;
+  &lt;li&gt;If files in a system are added, but not modified (such a logging system), differential backups will perform extremely well in terms of used disk space, specially if they are combined with full backups at regular intervals.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, a full backup strategy will be the strategy that will consume more disk space but in exchange it will offer more security to the user:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Full backups are independent to each other, they are basically a picture of the filesystem. If a backup copy is lost or corrupted, the rest are not affected.&lt;/li&gt;
+  &lt;li&gt;Full backups are best used in combination with other strategies, performing them at regular intervals when the filesystem is not under a heavy load, like during the night or weekends.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">I will be explaining the difference between a Full backup, a Differential backup and an Incremental backup. It is important to understand these three concepts in order to plan the most suitable backup strategy and be able to predict the storage required by a backup.</summary></entry><entry><title type="html">Dictionaries and lists in Ansible</title><link href="https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists.html" rel="alternate" type="text/html" title="Dictionaries and lists in Ansible" /><published>2022-12-28T00:00:00+00:00</published><updated>2022-12-28T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists</id><content type="html" xml:base="https://pablohiro.github.io/page/2022/12/28/dictionaries-and-lists.html">&lt;p&gt;Today I had the chance to explain to a colleague how dictionaries and lists are defined in &lt;strong&gt;Ansible&lt;/strong&gt;. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for &lt;strong&gt;Configuration as Code&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s tackle initializating first. Dictionaries use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}&lt;/code&gt;, lists use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;empty_dict: {}
+
+empty_list: []
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dictionaries can be populated in two ways, both equivalent.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my_dict: {key: 'value', kee: 'bar'}
+
+my_dict:
+  key: 'value'
+  kee: 'bar'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Same with lists:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my_list: ['first', 'second', 'third']
+
+my_list:
+  - first
+  - second
+  - third
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Things get complicated when both data structures are nested, so I am leaving some examples below, which hopefully will help you identify easily these structures.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;list_of_dictionaries: [first_key: 'first_value', second_key: 'second_value']
+
+list_of_dictionaries:
+  - { first_key: 'first_value' }
+  - { second_key: 'second_value' }
+
+
+dictionary_of_lists: {first_list: ['one', 'two', 'three'], second_list: ['four', 'five', 'six']}
+
+dictionary_of_lists:
+  first_list:
+    - one
+    - two
+    - three
+  second_list:
+    - four
+    - five
+    - six
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And the data above can be queried as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# To retrieve 'second_value'
+list_of_dictionaries[1]['second_key']
+
+# To retrieve 'three'
+dictionary_of_lists['first_list'][2]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">Today I had the chance to explain to a colleague how dictionaries and lists are defined in Ansible. The information in this post can be useful to understand how Python, JSON and YAML handle data structures, as some of the patterns shown here are used by these tools. I will use YAML for the examples as it is the most commonly used format for Configuration as Code</summary></entry><entry><title type="html">Github Pages and Jekyll</title><link href="https://pablohiro.github.io/page/2022/12/25/hello-world.html" rel="alternate" type="text/html" title="Github Pages and Jekyll" /><published>2022-12-25T00:00:00+00:00</published><updated>2022-12-25T00:00:00+00:00</updated><id>https://pablohiro.github.io/page/2022/12/25/hello-world</id><content type="html" xml:base="https://pablohiro.github.io/page/2022/12/25/hello-world.html">&lt;p&gt;I have created my personal webpage using &lt;strong&gt;Github Actions&lt;/strong&gt; and &lt;strong&gt;Github Pages&lt;/strong&gt;. Github allows its users to publish their webpages for free using the &lt;strong&gt;Github Pages&lt;/strong&gt; feature.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt; simply serves the contents of a repository branch as a webpage, hence assuming there is an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.html&lt;/code&gt; file that serves as an entrypoint.&lt;/p&gt;
+
+&lt;p&gt;Since I am not a web developer myself I have decided to use &lt;strong&gt;Jekyll&lt;/strong&gt;, which is a tool that processes &lt;strong&gt;Markdown&lt;/strong&gt; files into &lt;strong&gt;HTML&lt;/strong&gt;. I have used the following repository as reference in order to build a webpage using Jekyll:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/mmistakes/mm-github-pages-starter&quot;&gt;Minimal mistakes pages starter&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As I do not want to install and run Jekyll locally I have defined a &lt;strong&gt;Github Workflow&lt;/strong&gt;, which is the equivalent of a pipeline in Github, to run &lt;strong&gt;Jekyll&lt;/strong&gt; command line for me and deploy the resulting &lt;strong&gt;HTML&lt;/strong&gt; code in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch of my repository every time there is a new commit in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; branch. To do this I have followed this guide:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/marketplace/actions/jekyll-actions&quot;&gt;Jekyll actions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This allows me to publish a my own webpage in the internet, for free, and without installing any web development related software in my computer.&lt;/p&gt;</content><author><name>Pablo Hiroshi</name></author><summary type="html">I have created my personal webpage using Github Actions and Github Pages. Github allows its users to publish their webpages for free using the Github Pages feature.</summary></entry></feed>

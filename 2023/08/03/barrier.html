@@ -1,0 +1,333 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Linux and Windows with the same keyboard and mouse - PabloHiro</title>
+<meta name="description" content="I have recently refurbished an old computer I had at my parents place and decided it was time to have my first Linux physical machine and not just a virtual machine. However, I had to solve the problem of having only a single keyboard and mouse at home and avoid the hassle of unplugging and connecting the peripherals every time I want to work in Linux.">
+
+
+  <meta name="author" content="Pablo Hiroshi">
+  
+  <meta property="article:author" content="Pablo Hiroshi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="PabloHiro">
+<meta property="og:title" content="Linux and Windows with the same keyboard and mouse">
+<meta property="og:url" content="https://pablohiro.github.io/page/2023/08/03/barrier.html">
+
+
+  <meta property="og:description" content="I have recently refurbished an old computer I had at my parents place and decided it was time to have my first Linux physical machine and not just a virtual machine. However, I had to solve the problem of having only a single keyboard and mouse at home and avoid the hassle of unplugging and connecting the peripherals every time I want to work in Linux.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-08-03T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://pablohiro.github.io/page/2023/08/03/barrier.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://pablohiro.github.io/page/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/page/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/page/">
+          PabloHiro
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/page/posts/">Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/page/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Linux and Windows with the same keyboard and mouse">
+    <meta itemprop="description" content="I have recently refurbished an old computer I had at my parents place and decided it was time to have my first Linux physical machine and not just a virtual machine. However, I had to solve the problem of having only a single keyboard and mouse at home and avoid the hassle of unplugging and connecting the peripherals every time I want to work in Linux.">
+    <meta itemprop="datePublished" content="2023-08-03T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Linux and Windows with the same keyboard and mouse
+</h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>I have recently refurbished an old computer I had at my parents place and decided it was time to have my first Linux physical machine and not just a virtual machine. However, I had to solve the problem of having only a single keyboard and mouse at home and avoid the hassle of unplugging and connecting the peripherals every time I want to work in Linux.</p>
+
+<p>Luckily, a friend recommended me <a href="https://github.com/debauchee/barrier">barrier</a> (shout out to Víctor), so I took the challenge to set it up at home. My desk at home consists of:</p>
+
+<ul>
+  <li>A Windows 10 Laptop</li>
+  <li>An Ubuntu Jammy (22.04) PC</li>
+  <li>Two screens</li>
+  <li>One mouse</li>
+  <li>One keyboard</li>
+</ul>
+
+<p>After reading <strong>barrier’s</strong> documentation it became clear that it has a server-client architecture. Since I mainly work with my laptop, I chose to make this the server and make the Linux PC the client. This also meant that I had to configure both machines to have static IPs. I checked my router configuration:</p>
+
+<ul>
+  <li>Network range: 192.168.1.0/24</li>
+  <li>DHCP range: 192.168.1.125-192.168.1.254</li>
+  <li>Gateway: 192.168.1.1</li>
+</ul>
+
+<p>Good, no need to change the router to make some IPs available, part of the network range is not covered by DHCP. I configured both machines as follows:</p>
+
+<ul>
+  <li>Laptop (the server): 192.168.1.10</li>
+  <li>Ubuntu (the client): 192.168.1.11</li>
+</ul>
+
+<p>I installed the last available version of <strong>barrier</strong> on both systems. Luckily, <strong>barrier</strong> provides a <code class="language-plaintext highlighter-rouge">.exe</code> on its release page on Github: https://github.com/debauchee/barrier/releases/tag/v2.4.0, so that covers Windows. As for Ubuntu, as easy as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
+sudo apt install barrier
+</code></pre></div></div>
+
+<p>Now that <strong>barrier</strong> is installed on both machines, it is time to configure it.</p>
+
+<h2 id="windows">Windows</h2>
+
+<p>When <strong>barrier</strong> is started for the first time, it let’s you choose between server an client. I chose server. On the main panel of <strong>barrier</strong> the preferred settings are selected by default. All I had to do was making sure that the <code class="language-plaintext highlighter-rouge">Server</code> dialog box was selected.</p>
+
+<p><img src="https://pablohiro.github.io/page/assets/images/barrier-1.png" alt="server-config-1" /></p>
+
+<p>Then, after clicking on the <code class="language-plaintext highlighter-rouge">Configure Server</code> button, the following window pops up:</p>
+
+<p><img src="https://pablohiro.github.io/page/assets/images/barrier-2.png" alt="server-config-2" /></p>
+
+<p>I double clicked on the right of my main display, as I wanted to have Ubuntu displayed on my screen on the right, and named this client with the same hostname my Ubuntu machine has: <code class="language-plaintext highlighter-rouge">workstation</code>. Once this is done, and the <strong>barrier</strong> server is up and running, we are done with Windows.</p>
+
+<h2 id="linux">Linux</h2>
+
+<p>For Linux, I wanted to make the client start as a system service. Easiest way to set this up is to manually configure <strong>barrier</strong>, test it works and then save the command in a service file. In my case:</p>
+
+<p><img src="https://pablohiro.github.io/page/assets/images/barrier-3.png" alt="client-config-1" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ps aux | grep barrierc
+user   12128  2.5  0.0  96128  7840 ?        Sl   23:20   0:03 /usr/bin/barrierc -f --no-tray --debug INFO --name workstation --disable-crypto --log /var/log/barrier.log [192.168.1.10]:24800
+user   12486  0.0  0.0  17868  2540 pts/5    S+   23:23   0:00 grep --color=auto barrierc
+</code></pre></div></div>
+
+<p>Notice the flag <code class="language-plaintext highlighter-rouge">--disable-crypto</code>. For simplicity purposes, I disabled SSL as I have separate WIFI network for guests ;)</p>
+
+<p>I checked as well the command line options listed <a href="https://github.com/debauchee/barrier/wiki/Command-Line">here</a>, and added <code class="language-plaintext highlighter-rouge">--restart</code> to the service definition.</p>
+
+<p>I created the systemd service definition:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vim /etc/systemd/system/barrier.service
+$ cat /etc/systemd/system/barrier.service
+[Unit]
+Description=Barrier mouse/keyboard share
+Requires=display-manager.service
+After=display-manager.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/barrierc -f --no-tray --debug INFO --name workstation --disable-crypto --restart --log /var/log/barrier.log [192.168.1.10]:24800
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<p>And configured it so it boots on startup:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl daemon-reload
+sudo systemctl enable barrier
+sudo systemctl start barrier
+</code></pre></div></div>
+
+<p>And that’s it, setup done.</p>
+
+<h2 id="result">Result</h2>
+
+<p>:)</p>
+
+<p><img src="https://pablohiro.github.io/page/assets/images/barrier-4.jpg" alt="result" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-03T00:00:00+00:00">2023-08-03</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/page/2023/01/19/backups.html" class="pagination--pager" title="Backups
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 PabloHiro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/page/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
